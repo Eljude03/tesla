@@ -39,14 +39,17 @@ jobs:
 
     steps:
       - name: SSH into your homelab server
-        uses: appleboy/ssh-action@v0.1.3
         with:
           host: ${{ secrets.HOMELAB_HOST }}
           username: ${{ secrets.HOMELAB_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
+            mkdir -p /.ssh
+            cat ${{ secrets.SSH_PRIVATE_KEY }} > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
             ssh -o StrictHostKeyChecking=no eljude@192.168.68.119 'echo "Running remote commands"'
+            ssh -o StrictHostKeyChecking=no 192.168.68.119 "rndc reload"
 
       - name: Pull and deploy Docker image
         run: |
