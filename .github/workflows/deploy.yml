@@ -45,6 +45,8 @@ jobs:
           username: ${{ secrets.HOMELAB_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
+          timeout: 60
+          command_timeout: 120
 
       - name: Pull and deploy Docker image
         run: |
