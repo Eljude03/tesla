@@ -45,10 +45,8 @@ jobs:
           username: ${{ secrets.HOMELAB_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          timeout: 60s
-          command_timeout: 120s
           script: |
-            echo "Running remote commands"
+            ssh -o StrictHostKeyChecking=no eljude@192.168.68.119 'echo "Running remote commands"'
 
       - name: Pull and deploy Docker image
         run: |
