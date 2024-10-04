@@ -31,7 +31,7 @@ jobs:
         run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
 
       - name: Push Docker image to Docker Hub
-        run: docker tag tesla:latest eljude09/tesla:latest && docker push eljude03/tesla:latest
+        run: docker tag tesla:latest eljude03/tesla:latest && docker push eljude03/tesla:latest
 
   deploy:
     runs-on: ubuntu-latest
