@@ -45,12 +45,9 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22 
+          options: -o StrictHostKeyChecking=no
           script: |
-            mkdir -p /.ssh
-            cat ${{ secrets.SSH_PRIVATE_KEY }} > ~/.ssh/id_rsa
-            chmod 600 ~/.ssh/id_rsa
-            ssh -o StrictHostKeyChecking=no eljude@192.168.68.119 'echo "Running remote commands"'
-            ssh -o StrictHostKeyChecking=no 192.168.68.119 "rndc reload"
+            echo "Running remote commands"
 
       - name: Pull and deploy Docker image
         run: |
