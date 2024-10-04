@@ -40,7 +40,6 @@ jobs:
     steps:
       - name: SSH into your homelab server
         with:
-          port: 22
           script: |
             mkdir -p /.ssh
             cat ${{ secrets.SSH_PRIVATE_KEY }} > ~/.ssh/id_rsa
