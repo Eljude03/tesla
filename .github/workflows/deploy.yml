@@ -39,7 +39,12 @@ jobs:
 
     steps:
       - name: SSH into your homelab server
+        uses: appleboy/ssh-action@v0.1.3
         with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22 
           script: |
             mkdir -p /.ssh
             cat ${{ secrets.SSH_PRIVATE_KEY }} > ~/.ssh/id_rsa
