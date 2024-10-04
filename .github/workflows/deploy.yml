@@ -40,8 +40,8 @@ jobs:
     steps:
       - name: SSH into your homelab server
         run: |
-          echo "SSH_USERNAME: ${{ secrets.SSH_USERNAME }}"
-          echo "SSH_HOST: ${{ secrets.SSH_HOST }}"
+          # echo "SSH_USERNAME: ${{ secrets.SSH_USERNAME }}"
+          # echo "SSH_HOST: ${{ secrets.SSH_HOST }}"
 
           # Create the SSH directory if it doesn't exist
           mkdir -p ~/.ssh
