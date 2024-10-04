@@ -48,7 +48,55 @@ jobs:
           # Set the permissions for the directory
           chmod 700 ~/.ssh
           # Write the SSH private key to the file
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          echo "-----BEGIN OPENSSH PRIVATE KEY-----
+          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
+          -----END OPENSSH PRIVATE KEY-----" > ~/.ssh/id_rsa
           # Set permissions for the private key
           chmod 600 ~/.ssh/id_rsa
           # Add the host to known hosts to avoid prompts
