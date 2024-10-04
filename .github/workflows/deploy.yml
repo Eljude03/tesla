@@ -40,12 +40,21 @@ jobs:
     steps:
       - name: SSH into your homelab server
         run: |
-         mkdir -p ~/.ssh
-         chmod 700 ~/.ssh
-         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-         chmod 600 ~/.ssh/id_rsa
-         ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-         ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} "echo 'SSH connection successful'"
+          echo "SSH_USERNAME: ${{ secrets.SSH_USERNAME }}"
+          echo "SSH_HOST: ${{ secrets.SSH_HOST }}"
+
+          # Create the SSH directory if it doesn't exist
+          mkdir -p ~/.ssh
+          # Set the permissions for the directory
+          chmod 700 ~/.ssh
+          # Write the SSH private key to the file
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          # Set permissions for the private key
+          chmod 600 ~/.ssh/id_rsa
+          # Add the host to known hosts to avoid prompts
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          # SSH into the host and run a command
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} "echo 'SSH connection successful'"
 
       - name: Pull and deploy Docker image
         run: |
