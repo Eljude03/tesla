@@ -102,7 +102,7 @@ jobs:
           # Add the host to known hosts to avoid prompts
           ssh-keyscan -H 192.168.68.119 >> ~/.ssh/known_hosts
           # SSH into the host and run a command
-          ssh -o StrictHostKeyChecking=no eljude@192.168.68.119 "echo 'SSH connection successful'"
+          ssh -o StrictHostKeyChecking=no root@192.168.68.119 "echo 'SSH connection successful'"
 
       - name: Pull and deploy Docker image
         run: |
