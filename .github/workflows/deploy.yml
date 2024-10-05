@@ -34,7 +34,7 @@ jobs:
         run: docker tag tesla:latest eljude03/tesla:latest && docker push eljude03/tesla:latest
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: "self-hosted"
     needs: build
 
     steps:
