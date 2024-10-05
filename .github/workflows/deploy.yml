@@ -39,4 +39,5 @@ jobs:
         run: |
           docker stop tesla || true
           docker rm tesla || true
+          docker rmi tesla || true
           docker run -d --name tesla -p 3055:80 ${{ secrets.DOCKER_HUB_USERNAME }}/tesla:1.0
