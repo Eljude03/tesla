@@ -27,9 +27,7 @@ jobs:
         run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
 
       - name: Build Docker image
-        run: |
-          docker rmi tesla:1.0
-          docker build -t tesla:1.0 .
+        run:  docker build -t tesla:1.0 .
 
       - name: Tag Docker image for Docker Hub
         run: docker tag tesla:1.0 ${{ secrets.DOCKER_HUB_USERNAME }}/tesla:1.0
@@ -45,4 +43,5 @@ jobs:
         run: |
           docker stop tesla || true
           docker rm tesla || true
+          docker rmi eljude03/tesla:<none>
           docker run -d --name tesla -p 3055:80 ${{ secrets.DOCKER_HUB_USERNAME }}/tesla:1.0
