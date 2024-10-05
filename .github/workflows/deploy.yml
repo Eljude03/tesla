@@ -1,14 +1,13 @@
-name: CI/CD Pipeline
+name: Build and Deploy React App
 
 on:
   push:
     branches:
-      - master  # Trigger when pushing to the main branch
+      - master
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  build-and-deploy:
+    runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -21,34 +20,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build the React app
+      - name: Build React app
         run: npm run build
 
       - name: Build Docker image
         run: docker build -t tesla:latest .
 
-      - name: Log in to Docker Hub
-        run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
-
-      - name: Push Docker image to Docker Hub
-        run: docker tag tesla:latest eljude09/tesla:latest && docker push eljude03/tesla:latest
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: SSH into your homelab server
-        uses: appleboy/ssh-action@v0.1.3
-        with:
-          host: ${{ secrets.HOMELAB_HOST }}
-          username: ${{ secrets.HOMELAB_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-
-      - name: Pull and deploy Docker image
+      - name: Deploy Docker container
         run: |
-          docker pull eljude03/tesla:latest
           docker stop tesla || true
           docker rm tesla || true
-          docker run -d -p 3055:80 --name tesla eljude03/tesla:latest
+          docker run -d --name tesla -p 3055:80 tesla:latest
