@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: self-hosted
     steps:
       - name: Checkout code
@@ -27,7 +27,7 @@ jobs:
         run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
 
       - name: Build Docker image
-        run: docker build -t tesla:1.0 .
+        run:  docker build -t tesla:1.0 .
 
       - name: Tag Docker image for Docker Hub
         run: docker tag tesla:1.0 ${{ secrets.DOCKER_HUB_USERNAME }}/tesla:1.0
@@ -35,8 +35,13 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/tesla:1.0
 
+  deploy:
+    runs-on: self-hosted
+    needs: build
+    steps:
       - name: Deploy Docker container
         run: |
           docker stop tesla || true
           docker rm tesla || true
-          docker run -d --name tesla -p 3055:80 tesla:1.0
+          docker rmi eljude03/tesla || true
+          docker run -d --name tesla -p 3055:80 ${{ secrets.DOCKER_HUB_USERNAME }}/tesla:1.0
