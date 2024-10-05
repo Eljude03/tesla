@@ -4,7 +4,7 @@ import logo from '../images/tesla.svg'
 const Navbar = () => {
   return (
     <div className='navbar '>
-      <div>update tesla page</div>
+      <div>tesla page update</div>
         <img src={logo} alt="tesla logo" className='h-6' />
         <div className='hidden lg:block '>
             <a href="#model-s" className="navLink">Model S</a>
