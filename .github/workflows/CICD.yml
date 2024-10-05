@@ -29,9 +29,6 @@ jobs:
       - name: Build Docker image
         run:  docker build -t tesla:1.0 .
 
-      - name: Delete Previous Docker image
-        run:  docker rmi eljude03/tesla || true
-
       - name: Tag Docker image for Docker Hub
         run: docker tag tesla:1.0 ${{ secrets.DOCKER_HUB_USERNAME }}/tesla:1.0
 
