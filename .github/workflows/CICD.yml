@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: self-hosted
     steps:
       - name: Checkout code
@@ -35,6 +35,10 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/tesla:1.0
 
+  deploy:
+    runs-on: self-hosted
+    needs: build
+    steps:
       - name: Deploy Docker container
         run: |
           docker stop tesla || true
