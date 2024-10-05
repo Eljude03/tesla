@@ -39,4 +39,4 @@ jobs:
         run: |
           docker stop tesla || true
           docker rm tesla || true
-          docker run -d --name tesla -p 3055:80 tesla:latest
+          docker run -d --name tesla -p 3055:80 tesla:1.0
